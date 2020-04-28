@@ -5,24 +5,31 @@ import info
 session = create_session(info.settings[0], info.settings[1])  
 
 def GetLessons(teacher):
-    lessons = ''
+    lessons = []
     for lesson in session.tomorrow_timetable.lessons:
-        lessons.__add__(f'[{lesson.start.strftime("%H:%M")}-{lesson.end.strftime("%H:%M")}] {str(lesson.subject)}')
+        try:
+            lessons.append(f'[{lesson.start.strftime("%H:%M")}-{lesson.end.strftime("%H:%M")}] {str(lesson.subject)}')
+        except IndexError:
+            pass
 
     return lessons
 
 def GetGrades(teacher):
-    grades = ''
-    for grade in filter(lambda g: str(g.teacher) == teacher, session.grades()):
-        grades.__add__(f'[{grade}] {grade.comments[0]}')
+    grades = []
+    for grade in filter(lambda g: str(teacher).lower() in str(g.teacher).lower(), session.grades()):
+        try:
+            grades.append(f'[{grade.grade}] {grade.comments[0]}')
+        except IndexError:
+            pass
 
     return grades
 
-#GetGrades()
-
 def GetFreeDays():
-    free = ''
+    free = []
     for msg in session.school_free_days():
-        free.__add__(f'[{msg.starts}-{msg.ends}] {msg.name}')
+        try:
+            free.append(f'[{msg.starts}-{msg.ends}] {msg.name}')
+        except IndexError:
+            pass
 
     return free
