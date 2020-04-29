@@ -13,6 +13,10 @@ class BotEventsCog(commands.Cog):
         print('Discord Bot is ready')
 
     @commands.Cog.listener()
+    async def on_destroy(self):
+        print('Discord Bot turned off')
+
+    @commands.Cog.listener()
     async def on_member_join(self, member):
         role = discord.utils.get(member.server.roles, name = 'Test role')
         await member.add_roles(role)
@@ -22,7 +26,7 @@ class BotEventsCog(commands.Cog):
     async def on_member_remove(self, member):
         print(f'{member} has left a server')
 
-# The setup fucntion below is neccesarry. Remember we give bot.add_cog() the name of the class in this case MembersCog.
+# The setup fucntion below is neccesarry. Remember we give bot.add_cog() the name of the class in this case BotEventsCog.
 # When we load the cog, we use the name of the file.
 def setup(bot):
     bot.add_cog(BotEventsCog(bot))

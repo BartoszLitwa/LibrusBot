@@ -37,7 +37,7 @@ class BotCommandsCog(commands.Cog):
         await ctx.message.channel.send(embed=embed)
         await self.bot.logout()
 
-# The setup fucntion below is neccesarry. Remember we give bot.add_cog() the name of the class in this case MembersCog.
+# The setup fucntion below is neccesarry. Remember we give bot.add_cog() the name of the class in this case BotCommandsCog.
 # When we load the cog, we use the name of the file.
 def setup(bot):
     bot.add_cog(BotCommandsCog(bot))
